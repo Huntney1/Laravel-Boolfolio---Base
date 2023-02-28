@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
+        //! Definisco i campi della tabella
         Schema::create('porojects', function (Blueprint $table) {
             $table->id();
+
             $table->string('title');
             $table->text('description');
             $table->string('image')->nullable();
+            $table->string('url')->nullable();
 
             $table->timestamps();
         });
