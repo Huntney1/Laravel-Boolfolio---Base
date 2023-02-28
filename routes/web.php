@@ -28,9 +28,10 @@ Route::get('/', function () {
 //? non la utiliziamo perche eseste una versione migliorata
 /* Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashcboard'); */
 
-Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->namespace('Admin')->group(function(){
+
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-    Route::resource('post', [PostController::class])->parameters(['post' => 'post:slug']);
+    /* Route::resource('post', PostController::class)->parameters(['post' => 'post:slug']); */
 
 
 });
