@@ -1,0 +1,18 @@
+*?Layout e modello
+Abbiamo creato un progetto chiamato "Boolfolio" utilizzando il comando composer create-project laravel/laravel:^9.0 Boolfolio. Successivamente abbiamo installato Laravel Breeze per l'autenticazione utilizzando il comando composer require laravel/breeze --dev.
+Per la gestione delle entità del sistema portfolio, abbiamo creato un modello chiamato "Project" utilizzando il comando php artisan make:model Project -rcms --request. Il modello ha i campi name, description e image e viene associato alla tabella projects nel database.
+
+*?Migrazione
+Abbiamo creato la migrazione per la tabella "projects" utilizzando il comando php artisan make:migration create_projects_table. All'interno della migrazione, abbiamo definito i campi per la tabella e le eventuali relazioni con altre entità. Dopo aver modificato la migrazione, abbiamo creato la tabella nel database utilizzando il comando php artisan migrate.
+
+*?Rotte e controller
+Abbiamo creato un resource controller chiamato "Admin\ProjectController" per la gestione delle operazioni CRUD sui progetti. In particolare, abbiamo implementato le funzionalità index, create e store. Abbiamo creato le rotte necessarie per il controller all'interno del file "web.php".
+
+*?Validazione dei dati
+Per la validazione dei dati dei progetti nelle operazioni CRUD che lo richiedono, abbiamo creato due form requests chiamati "StorePostRequest" utilizzando il comando php artisan make:request StorePostRequest. All'interno delle form requests, abbiamo definito le regole di validazione per i campi dei form.
+
+*?Guida
+In allegato trovate la guida con gli step aggiornati ed il file admin.blade.php. Il file admin.blade.php è stato adattato alle esigenze del sistema portfolio e contiene il layout per la sezione di back-office.
+
+*?Bonus
+Abbiamo implementato la validazione dei dati dei progetti nelle operazioni CRUD che lo richiedono utilizzando i due form requests creati in precedenza. In particolare, abbiamo validato i campi dei form per la creazione e la modifica dei progetti.
