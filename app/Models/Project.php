@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Poroject extends Model
+class Project extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,9 @@ class Poroject extends Model
     protected $fillable = [
         'title',
         'description',
+        'category',
         'image',
         'url',
+        'published',
     ];
 }
