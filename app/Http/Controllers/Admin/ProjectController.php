@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -42,25 +43,38 @@ class ProjectController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
+            'description' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
-            'url' => '',
-            'published' => '',
+            'url' => 'nullable|url',
+            'published' => 'nullable|date',
         ]);
 
+        // nuova istanza di Project e validazione dei valori
+        $project = new Project;
+        $project->title = $validatedData['title'];
+        $project->description = $validatedData['description'];
+        $project->category = $validatedData['category'];
+        $project->image = $validatedData['image'];
+        $project->url = $validatedData['url'];
+        $project->published = $validatedData['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
+
+        $project->save();
+
+        if ($validatedData['url'] == 'https://picsum.photos/200/300') {
+            $project->url = $validatedData['image'];
+            $project->save();
+        }
+
+        return redirect(route('admin.projects.index'))->with('success', 'Project created successfully.');
 
 
-         if ($validatedData['url'] == 'https://picsum.photos/200/300') $validatedData['url'] = $validatedData['image'];
+      /*   if ($validatedData['url'] == 'https://picsum.photos/200/300') $validatedData['url'] = $validatedData['image'];
 
-         //! Impostare il campo pubblico su true
-         $validatedData['published'] = true;
+        $validatedData['published'] = true;
+        Project::create($validatedData); */
 
-         $project = projects::create($validatedData);
-
-         return redirect(route('admin.projects.index'))->with('success', 'Project created successfully.');
     }
-
-
 
 
 
@@ -73,7 +87,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -86,7 +101,8 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -111,6 +127,15 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+
+        if ($project) {
+            $project->delete();
+
+            return redirect()->route('admin.project.index')->with('success','Progetto cancellato con successo!');
+
+        } else {
+            return redirect()->route('admin.project.index')->with('error','Progetto non trovato!');
+        }
     }
 }

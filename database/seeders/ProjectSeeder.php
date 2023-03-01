@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\Project;
@@ -16,10 +17,11 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i=0; $i<=10; $i++){
+        for ($i = 0; $i <= 10; $i++) {
 
             $newProject = new Project();
             $newProject->title = $faker->sentence();
+            $newProject->description = $faker->paragraph();
             $newProject->category = $faker->word();
             $newProject->image = $faker->imageUrl();
             $newProject->url = $faker->url();
@@ -28,7 +30,7 @@ class ProjectSeeder extends Seeder
             $newProject->save();
         }
 
-       /*  Project::create([
+        /*  Project::create([
             'title' => 'Project 1',
             'description' => 'Description for Project 1',
             'image' => 'https://picsum.photos/200/300',
