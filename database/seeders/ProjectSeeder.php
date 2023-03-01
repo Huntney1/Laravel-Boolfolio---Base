@@ -1,16 +1,34 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\Project;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class ProjectSeeder extends Seeder
 {
-    public function run()
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run(Faker $faker)
     {
-        Project::create([
+        for($i=0; $i<=10; $i++){
+
+            $newProject = new Project();
+            $newProject->title = $faker->sentence();
+            $newProject->category = $faker->word();
+            $newProject->image = $faker->imageUrl();
+            $newProject->url = $faker->url();
+            $newProject->published = $faker->boolean();
+
+            $newProject->save();
+        }
+
+       /*  Project::create([
             'title' => 'Project 1',
             'description' => 'Description for Project 1',
             'image' => 'https://picsum.photos/200/300',
@@ -30,6 +48,6 @@ class ProjectSeeder extends Seeder
             'image' => 'https://picsum.photos/200/300',
             'url' => 'https://picsum.photos/200/300',
 
-        ]);
+        ]); */
     }
 }

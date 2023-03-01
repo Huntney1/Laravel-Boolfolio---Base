@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController as DashboardController;
-use App\Http\Controllers\Admin\ProjectController as ProjectController;
-
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +29,9 @@ Route::get('/', function () {
 //? non la utiliziamo perche eseste una versione migliorata
 /* Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashcboard'); */
 
-Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->namespace('Admin')->group(function(){
-
-    Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-    Route::resource('admin/projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
-
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('projects', ProjectController::class);
 
 });
 

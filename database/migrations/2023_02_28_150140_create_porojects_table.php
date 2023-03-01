@@ -19,8 +19,10 @@ return new class extends Migration
 
             $table->string('title');
             $table->text('description');
+            $table->string('category');
             $table->string('image')->nullable();
             $table->string('url')->nullable();
+            $table->boolean('published')->default(false);
 
             $table->timestamps();
         });
