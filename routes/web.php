@@ -21,6 +21,9 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('admin/projects/create', 'Admin\ProjectController@create')->name('admin.projects.create');
+
+
 //! QUESTA ROTTA è STATA MODIFICATA PERCHE' ABBIAMO UN CONTROLLER CHE CI RESTITUISCE LA VIEW
 /* Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,6 +35,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('projects', ProjectController::class);
+
 
 });
 

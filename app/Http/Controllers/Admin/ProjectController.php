@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = project::all();
+        $projects = Project::all();
 
         return view('admin.projects.index', compact('projects'));
     }
@@ -66,7 +66,7 @@ class ProjectController extends Controller
             $project->save();
         }
 
-        return redirect(route('admin.projects.index'))->with('success', 'Project created successfully.');
+        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
 
 
       /*   if ($validatedData['url'] == 'https://picsum.photos/200/300') $validatedData['url'] = $validatedData['image'];

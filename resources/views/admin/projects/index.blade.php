@@ -8,14 +8,14 @@
                 <h2>Lista progetti</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('projects.create') }}"> Nuovo progetto</a>
+                <a class="btn btn-success" href="{{ route('admin.projects.create') }}"> Nuovo progetto</a>
             </div>
         </div>
     </div>
 
-    @if ($message = Session::get('success'))
+    @if (Session('message'))
         <div class="alert alert-success">
-            <p>{{ $message }}</p>
+            <p>{{ sessino('$message') }}</p>
         </div>
     @endif
 
@@ -34,23 +34,25 @@
                 <td>{{ $project->id }}</td>
                 <td>{{ $project->title }}</td>
                 <td>{{ $project->description }}</td>
+                <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
                 <td>{{ $project->category }}</td>
-                <td>{{ $project->image }}</td>
                 <td>{{ $project->published }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('projects.show', $project->id) }}">Visualizza</a>
-                    <a class="btn btn-primary" href="{{ route('projects.edit', $project->id) }}">Modifica</a>
-                    {!! Form::open([
-                        'method' => 'DELETE',
-                        'route' => ['projects.destroy', $project->id],
-                        'style' => 'display:inline',
-                    ]) !!}
-                    {!! Form::submit('Elimina', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
+                    {{-- questa rotta visualizza il dettaglio del progetto --}}
+                    <a class="btn btn-primary btn-square" href="{{ route('admin.projects.show', $project->id) }}"
+                        title="visualizza dettaglio"><i class="fas fa-eye"></i></a>
+                    {{-- questa rotta modifica il progetto --}}
+                    <a class="btn btn-warning btn-square" href="{{ route('admin.projects.edit', $project->id) }}"
+                        title="modifica dettaglio"><i class="fas fa-edit"></i></a>
+
+                    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-square btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
+
                 </td>
             </tr>
         @endforeach
     </table>
-
-    {!! $projects->links() !!}
 @endsection
