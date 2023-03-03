@@ -36,7 +36,7 @@
                 <td>{{ $project->description }}</td>
                 <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
                 <td>{{ $project->category }}</td>
-                <td>{{ $project->published }}</td>
+                <td>{{ date('d/m/Y', strtotime($project->published)) }}</td>
                 <td>
                     {{-- questa rotta visualizza il dettaglio del progetto --}}
                     <a class="btn btn-primary btn-square" href="{{ route('admin.projects.show', $project->id) }}"

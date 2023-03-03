@@ -52,7 +52,7 @@ class ProjectController extends Controller
             'category' => 'required',
             'image' => 'required|url',
             'url' => 'nullable|url',
-            'published' => 'nullable|date',
+            'published' => 'nullable|date_format:Y-m-d H:i:s',
         ]);
 
         $validatedData['published'] = $validatedData['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
@@ -60,7 +60,7 @@ class ProjectController extends Controller
         // Converti la data nel formato desiderato
         if (!empty($validatedData['published'])) {
             $date = new DateTime($validatedData['published']);
-            $validatedData['published'] = $date->format('d-m-Y');
+            $validatedData['published_at'] = $date->format('d-m-Y');
         }
 
         if ($validatedData['url'] == 'https://picsum.photos/200/300') {
@@ -120,10 +120,10 @@ class ProjectController extends Controller
             'category' => 'required',
             'image' => 'required|url',
             'url' => 'nullable|url',
-            'published' => 'nullable|date',
+            'published' => 'nullable|date_format:Y-m-d H:i:s',
         ]);
 
-        $validatedData['published'] = $validatedData['published'] ?? true;
+        $validatedData['published_at'] = $validatedData['published'] ?? null;
 
         if ($validatedData['url'] == 'https://picsum.photos/200/300') {
             $validatedData['url'] = $validatedData['image'];
@@ -132,6 +132,7 @@ class ProjectController extends Controller
 
 
         /* Project::create($validatedData); */
+
         $project->update($validatedData);
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
     }

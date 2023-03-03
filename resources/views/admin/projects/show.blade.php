@@ -32,7 +32,7 @@
                 </div>
 
                 <strong>Pubblicato</strong>
-                <p>{{ date('d/m/Y', strtotime($project->published)) }}</p>
+                <p>{{ date('d/m/Y H:i:s', strtotime($project->published)) }}</p>
 
             </div>
         </div>
