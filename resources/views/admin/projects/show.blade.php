@@ -1,3 +1,5 @@
+
+
 @extends('layouts.admin')
 @section('content')
     <div class="container">
@@ -9,7 +11,6 @@
                 <div>
                     <a href="{{route('admin.projects.index')}}" class="btn btn-primary">Torna all'Elenco</a>
                 </div>
-
             </div>
 
             <div class="col-12">
@@ -25,11 +26,13 @@
                 <strong>Categoria</strong>
                 <p>{{ $project->category }}</p>
 
-                <strong>Immagine</strong>
-                <p>{{ $project->image }}</p>
+                <strong class="mt-3">Immagine</strong>
+                <div>
+                    <img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image">
+                </div>
 
-                {{-- <strong>Pubblicato</strong>
-                <p>{{ $project>publis }}</p> --}}
+                <strong>Pubblicato</strong>
+                <p>{{ date('d/m/Y', strtotime($project->published)) }}</p>
 
             </div>
         </div>

@@ -19,3 +19,4 @@ class Project extends Model
         'published',
     ];
 }
+?>

@@ -1,53 +1,69 @@
 @extends('layouts.admin')
-
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="pull-left">
-                <h2>Modifica progetto</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between my-2">
+                <div>
+                    <h1>Modifica {{ $project->title }}</h1>
+
+                </div>
+                <div>
+                    <a href="{{ route('admin.projects.index') }}" class="btn btn-primary my-2">Torna all'Elenco</a>
+                </div>
+            </div>
+            <div class="col-12">
+
+                <form action="{{ route('admin.projects.update', $projects->id) }} " method="POST">
+                    @csrf
+                    @method('PUT')
+                    {{-- * TITOLO --}}
+                    <div class="form-group my-3">
+                        <label class="control-label">
+                            Titolo
+                        </label>
+                        <input type="text" class="form-control" placeholder="Inserisci Titolo Progetto" id="title"
+                            name="title" value="{{ old('title') ?? $project->title }}">
+                    </div>
+                    {{--* DESCRIZIONE --}}
+                    <div class="form-group my-3">
+                        <label class="control-label">
+                            Descrizione
+                        </label>
+                        <textarea type="text" class="form-control" placeholder="Inserisci Descrizione del Progetto" id="description"
+                            name="description" value="{{ old('description') ?? $project->description }}"></textarea>
+                    </div>
+                    {{--* CATEGORIA --}}
+                    <div class="form-group my-3">
+                        <label class="control-label">
+                            Categoria
+                        </label>
+                        <input type="text" class="form-control" placeholder="Inserisci la Categoria"
+                            id="category" name="category" value="{{ old('category') ?? $project->category }}">
+                    </div>
+                    {{--* IMMAGINE --}}
+                    <div class="form-group my-3">
+                        <label class="control-label">
+                            Immagine
+                        </label>
+                        <input type="file" class="form-control" placeholder="Inserisci l'Immagine"
+                            id="image" name="image" value="{{ old('image') ?? $project->image }}">
+                    </div>
+                    {{--* PUBBLICATO --}}
+                    <div class="form-group my-3">
+                        <label class="control-label">
+                            Pubblicato
+                        </label>
+                        <input type="date" class="form-control" placeholder="Inserisci l'Immagine"
+                            id="published" name="published" value="{{ old('published') ?? $project->published }}">
+                    </div>
+
+
+
+                    <div class="form-group my-3">
+                        <button type="submit" class="btn btn-success">SALVA</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <br>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Attenzione!</strong> C'è stato un problema con l'operazione richiesta.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    {!! Form::model($project, ['method' => 'PATCH','route' => ['admin.projects.update', $project->id]]) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Titolo:</strong>
-                {!! Form::text('title', null, array('placeholder' => 'Titolo','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Descrizione:</strong>
-                {!! Form::textarea('description', null, array('placeholder' => 'Descrizione','class' => 'form-control','style'=>'height:100px')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Immagine:</strong>
-                {!! Form::text('image', null, array('placeholder' => 'Immagine','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>URL:</strong>
-                {!! Form::text('url', null, array('placeholder' => 'URL','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Pubblicato:</strong>
-                {!! Form::input('date', 'published_date', '2023-03-01', ['class' => 'form-control']) !!}
-            </div>
-        </div>
+@endsection
