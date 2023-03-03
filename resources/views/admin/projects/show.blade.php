@@ -27,9 +27,10 @@
                 <p>{{ $project->category }}</p>
 
                 <strong class="mt-3">Immagine</strong>
-                <div>
+                <div>{{ $project->image }}</div>
+                {{-- <div>
                     <img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image">
-                </div>
+                </div> --}}
 
                 <strong>Pubblicato</strong>
                 <p>{{ date('d/m/Y H:i:s', strtotime($project->published)) }}</p>
