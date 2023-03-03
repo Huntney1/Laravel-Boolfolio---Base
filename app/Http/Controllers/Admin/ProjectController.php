@@ -30,7 +30,7 @@ class ProjectController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * TODO: Mostra il form e il metodo per creare un nuovo progetto
+     ** Mostra il form e il metodo per creare un nuovo progetto
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,21 +41,28 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * TODO: Salva il nuovo progetto nel Database
+     ** Salva il nuovo progetto nel Database
      *
      * @param  App\Http\Request\StoreProjectRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProjectRequest $request)
     {
-        /* $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|max:40',
             'description' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
             'url' => 'nullable|url',
             'published' => 'nullable|date_format:Y-m-d H:i:s',
-        ]); */
+        ]);
+
+      /*   $project = new Project;
+        $project->title = $validatedData['title'];
+        $project->description = $validatedData['description'];
+        $project->category = $validatedData['category'];
+        $project->image = $validatedData['image'];
+        $project->url = $validatedData['url']; */
 
         $project = new Project;
         $project->fill($validatedData);
@@ -72,13 +79,13 @@ class ProjectController extends Controller
         }
 
 
-        Project::create($validatedData);
+        Project::create($validatedData)->save();
         //! return redirect()->back()->with('message', 'Project created successfully
-        $newProject->save();
+
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
     }
 
-    //TODO: -------------------------------------------FINE STORE--------------------------------------------------
+    //* -------------------------------------------FINE STORE--------------------------------------------------
 
     /**
      * Display the specified resource.
