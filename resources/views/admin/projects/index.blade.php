@@ -13,15 +13,16 @@
         </div>
     </div>
 
-    @if (Session('message'))
+    @if (session('message'))
         <div class="alert alert-success">
-            <p>{{ sessino('$message') }}</p>
+            <p>{{ session('message') }}</p>
         </div>
     @endif
 
     <table class="table table-bordered">
         <tr>
         <tr>
+            <th scope="col">Id</th>
             <th scope="col">Titolo</th>
             <th scope="col">Descrizione</th>
             <th scope="col">Categoria</th>
@@ -34,8 +35,9 @@
                 <td>{{ $project->id }}</td>
                 <td>{{ $project->title }}</td>
                 <td>{{ $project->description }}</td>
-                <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
                 <td>{{ $project->category }}</td>
+                <td>{{ $project->image }}</td>
+                <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
                 <td>{{ date('d/m/Y', strtotime($project->published)) }}</td>
                 <td>
                     {{-- questa rotta visualizza il dettaglio del progetto --}}
