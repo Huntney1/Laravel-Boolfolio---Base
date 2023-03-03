@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use App\Http\Controllers\Controller;
+use App\Http\Request\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use DateTime;
 
@@ -41,20 +43,22 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      * TODO: Salva il nuovo progetto nel Database
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Request\StoreProjectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $validatedData = $request->validate([
+        /* $validatedData = $request->validate([
             'title' => 'required|max:40',
             'description' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
             'url' => 'nullable|url',
             'published' => 'nullable|date_format:Y-m-d H:i:s',
-        ]);
+        ]); */
 
+        $project = new Project;
+        $project->fill($validatedData);
         $validatedData['published'] = $validatedData['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
 
         // Converti la data nel formato desiderato
@@ -70,6 +74,7 @@ class ProjectController extends Controller
 
         Project::create($validatedData);
         //! return redirect()->back()->with('message', 'Project created successfully
+        $newProject->save();
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
     }
 
@@ -128,8 +133,6 @@ class ProjectController extends Controller
         if ($validatedData['url'] == 'https://picsum.photos/200/300') {
             $validatedData['url'] = $validatedData['image'];
         }
-
-
 
         /* Project::create($validatedData); */
 

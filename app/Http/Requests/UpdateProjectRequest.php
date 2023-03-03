@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProjectRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,12 +26,12 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
 
-            'title' => 'required|max:155', // campo obbligatorio con una lunghezza massima di 255 caratteri
+            'title' => ['required', Rule::unique('projects')->ignore($this->project), 'max:150'], // campo obbligatorio con una lunghezza massima di 255 caratteri
             'description' => 'nullable|string', //* campo facoltativo di tipo stringa
             'category' => 'nullable|string', // campo facoltativo di tipo stringa
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', //*  campo facoltativo di tipo immagine con i formati consentiti JPEG, PNG, JPG, GIF e SVG e dimensione massima di 2 MB
-            'url' => 'nullable|url|max:255', // campo facoltativo che deve essere un URL valido e ha una lunghezza massima di 255 caratteri
-            'published' => 'nullable|date', //* campo facoltativo che deve essere una data valida
+            'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', 'dimensions:min_width=100,min_height=100,max_width=5000,max_height=5000'], //*  campo facoltativo di tipo immagine con i formati consentiti JPEG, PNG, JPG, GIF e SVG e dimensione massima di 2 MB
+            'url' => 'sometimes|url|max:255|filled', // campo facoltativo che deve essere un URL valido e ha una lunghezza massima di 255 caratteri
+            'published' => 'sometimes|date|filled', //* campo facoltativo che deve essere una data valida
 
         ];
     }
