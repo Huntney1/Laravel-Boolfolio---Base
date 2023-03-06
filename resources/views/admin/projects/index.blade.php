@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 margin-tb">
+        <div class="col-lg-12 my-4">
             <div class="pull-left">
                 <h2>Lista Progetti</h2>
             </div>
@@ -19,9 +19,8 @@
         </div>
     @endif
 
-    <table class="table table-bordered">
-        <tr>
-        <tr>
+    <table class="table table-striped">
+        <>
             <th scope="col">Id</th>
             <th scope="col">Titolo</th>
             <th scope="col">Descrizione</th>
@@ -29,7 +28,6 @@
             <th scope="col">Categoria</th>
             <th scope="col">immagine</th>
             <th scope="col">Pubblicato</th>
-        </tr>
         </tr>
         @foreach ($projects as $project)
             <tr>
