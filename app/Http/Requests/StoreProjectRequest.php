@@ -28,7 +28,6 @@ class StoreProjectRequest extends FormRequest
             'description' => ['nullable, string'], //* campo facoltativo di tipo stringa
             'category' => ['nullable, string'], // campo facoltativo di tipo stringa
             'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', 'dimensions:min_width=100,min_height=100,max_width=5000,max_height=5000'], //*  campo facoltativo di tipo immagine con i formati consentiti JPEG, PNG, JPG, GIF e SVG e dimensione massima di 2 MB
-            'url' => ['sometimes,url,max:255,filled'], // campo facoltativo che deve essere un URL valido e ha una lunghezza massima di 255 caratteri
             /* 'published' => ['sometimes,date,filled'], */ //* campo facoltativo che deve essere una data valida
         ];
     }
@@ -46,8 +45,7 @@ class StoreProjectRequest extends FormRequest
             'image.mimes' => 'Il file caricato deve essere in formato: :values',
             'image.max' => 'Il file caricato non può superare i :max Kb',
             'image.dimensions' => 'Le dimensioni dell\'immagine devono essere tra :min_widthx:min_height',
-            'url.url' => 'L\'URL del progetto non è valido',
-            'url.max' => 'L\'URL del progetto non può superare i :max caratteri',
+
         ];
     }
 }

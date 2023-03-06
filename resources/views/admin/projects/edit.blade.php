@@ -13,7 +13,7 @@
             </div>
             <div class="col-12">
 
-                <form action="{{ route('admin.projects.update', $projects->id) }} " method="POST">
+                <form action="{{ route('admin.projects.update', $projects->slug) }} " method="POST">
                     @csrf
                     @method('PUT')
                     {{-- * TITOLO --}}

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller; // Classe da non dimenticare
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
@@ -11,6 +11,8 @@ use DateTime;
 
 class ProjectController extends Controller
 {
+    //! -INDEX-
+
     /**
      * Display a listing of the resource.
      * TODO: Mostra l'elenco dei progetti
@@ -28,6 +30,8 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    //! -CREATE-
+
     /**
      * Show the form for creating a new resource.
      ** Mostra il form e il metodo per creare un nuovo progetto
@@ -39,6 +43,7 @@ class ProjectController extends Controller
         return view('admin.projects.create');
     }
 
+    //! -STORE-
     /**
      * Store a newly created resource in storage.
      ** Salva il nuovo progetto nel Database
@@ -48,65 +53,70 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:40',
-            'description' => 'nullable',
-            'slug' => 'nullable',
-            'category' => 'required',
-            'image' => 'required|url',
-            'url' => 'nullable|url',
-            'published' => 'nullable|date_format:Y-m-d H:i:s',
-        ]);
+        $form_data = $request->validated();
+        $slug = Project::generateSlug($request->title);
 
-      /*   $project = new Project;
-        $project->title = $validatedData['title'];
-        $project->description = $validatedData['description'];
-        $project->category = $validatedData['category'];
-        $project->image = $validatedData['image'];
-        $project->url = $validatedData['url']; */
+        //*Aggiungo Coppia Chiave Valore All'array $form_data
+        $form_data['slug'] = $slug;
 
-        $project = new Project;
-        $project->fill($validatedData);
-        $validatedData['published'] = $validatedData['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
+        $newProject = new Project;
+        $newProject->fill($form_data);
+        /* $project->published = $form_data['published'] ?? true; //! Impostare il campo pubblico su true se non è presente */
 
-        // Converti la data nel formato desiderato
-        if (!empty($validatedData['published'])) {
-            $date = new DateTime($validatedData['published']);
-            $validatedData['published_at'] = $date->format('d-m-Y');
+        //* Converti la data nel formato desiderato
+        if (!empty($form_data['published'])) {
+            $date = new DateTime($form_data['published']);
+            $form_data['published_at'] = $date->format('d-m-Y');
+            unset($form_data['published']);
         }
 
-        if ($validatedData['url'] == 'https://picsum.photos/200/300') {
-            $validatedData['url'] = $validatedData['image'];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $data['image'] = file_get_contents($image->getRealPath());
+        }
+
+        if (isset($form_data['url']) && $form_data['url'] == 'https://picsum.photos/200/300') {
+            $form_data['url'] = $form_data['image'];
         }
 
 
-        Project::create($validatedData)->save();
-        //! return redirect()->back()->with('message', 'Project created successfully
+        $newProject = new Project;
+        $newProject->title = $form_data['title'];
+        $newProject->description = $form_data['description'];
+        $newProject->category = $form_data['category'];
+        $newProject->image = $form_data['image'];
+        $newProject->published = $form_data['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
+
+        $newProject->save();
 
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
     }
 
     //* -------------------------------------------FINE STORE--------------------------------------------------
 
+    //! -SHOW-
+
     /**
      * Display the specified resource.
      * TODO: Visualizza la risorsa specificata
      *
-     * @param  int  $id
+     * @param  int  Project  $projectt
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::findOrFail($id);
+        /* $project = Project::findOrFail($project); */
         return view('admin.projects.show', compact('project'));
     }
+
+    //! -EDIT-
 
     /**
      * Show the form for editing the specified resource.
      * TODO: Vsualizza il modulo per la modifica della risorsa specificata
      *
      *
-     * @param  int  Project  $project
+     * @param  int Project  $project
      * @return \Illuminate\Http\Response
      */
     public function edit(Project $project)
@@ -114,6 +124,8 @@ class ProjectController extends Controller
         /* $project = Project::findOrFail($project); */
         return view('admin.projects.edit', compact('project'));
     }
+
+    //! -UPDATE-
 
     /**
      * Update the specified resource in storage.
@@ -124,30 +136,42 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-    public function update(UpdateProjectRequest $request, $id)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $project = Project::findOrFail($id);
+        /* $project = Project::findOrFail($id); */
 
-        $validatedData = $request->validate([
+        $form_data = $request->validated();
+        $slug = Project::generateSlug($request->title);
+        $form_data['slug'] = $slug;
+
+       $project->update($form_data);
+        return redirect()->route('admin.projects.index')->with('message','post modificato correttamente');
+
+        $form_data = $request->validate([
             'title' => 'required|max:40',
             'description' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
-            'url' => 'nullable|url',
             'published' => 'nullable|date_format:Y-m-d H:i:s',
         ]);
 
-        $validatedData['published_at'] = $validatedData['published'] ?? null;
+        $form_data['published_at'] = $form_data['published'] ?? null;
 
-        if ($validatedData['url'] == 'https://picsum.photos/200/300') {
-            $validatedData['url'] = $validatedData['image'];
+        //* Converti la data nel formato desiderato
+        if (!empty($form_data['published'])) {
+            $date = new DateTime($form_data['published']);
+            $form_data['published_at'] = $date->format('d-m-Y');
+            unset($form_data['published']);
         }
+
 
         /* Project::create($validatedData); */
 
-        $project->update($validatedData);
-        return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
+        $project->update($form_data);
+        return redirect()->route('admin.projects.index')->with('message', ' Project successfully modified');
     }
+
+    //! -DESTROY-
 
     /**
      * Remove the specified resource from storage.

@@ -20,7 +20,7 @@
     @endif
 
     <table class="table table-striped">
-        <>
+        <tr>
             <th scope="col">Id</th>
             <th scope="col">Titolo</th>
             <th scope="col">Descrizione</th>
@@ -38,15 +38,16 @@
                 <td>{{ $project->category }}</td>
                 <td><img src="{{ asset($project->image) }}" alt="Project image"></td>
                 <td>{{ date('d/m/Y H:i', strtotime($project->published)) }}</td>
+
                 <td>
                     {{-- questa rotta visualizza il dettaglio del progetto --}}
-                    <a class="btn btn-primary btn-square" href="{{ route('admin.projects.show', $project->id) }}"
+                    <a class="btn btn-primary btn-square" href="{{ route('admin.projects.show', $project->slug) }}"
                         title="visualizza dettaglio"><i class="fas fa-eye"></i></a>
                     {{-- questa rotta modifica il progetto --}}
-                    <a class="btn btn-warning btn-square" href="{{ route('admin.projects.edit', $project->id) }}"
+                    <a class="btn btn-warning btn-square" href="{{ route('admin.projects.edit', $project->slug) }}"
                         title="modifica dettaglio"><i class="fas fa-edit"></i></a>
 
-                    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+                    <form action="{{ route('admin.projects.destroy', $project->slug) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-square btn-danger" type="submit"><i class="fas fa-trash"></i></button>
