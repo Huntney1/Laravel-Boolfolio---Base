@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Lista progetti</h2>
+                <h2>Lista Progetti</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('admin.projects.create') }}"> Nuovo progetto</a>
@@ -25,6 +25,7 @@
             <th scope="col">Id</th>
             <th scope="col">Titolo</th>
             <th scope="col">Descrizione</th>
+            <th scope="col">Slug</th>
             <th scope="col">Categoria</th>
             <th scope="col">immagine</th>
             <th scope="col">Pubblicato</th>
@@ -35,10 +36,10 @@
                 <td>{{ $project->id }}</td>
                 <td>{{ $project->title }}</td>
                 <td>{{ $project->description }}</td>
+                <td>{{ $project->slug }}</td>
                 <td>{{ $project->category }}</td>
-                <td>{{ $project->image }}</td>
-                <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
-                <td>{{ date('d/m/Y', strtotime($project->published)) }}</td>
+                <td><img src="{{ asset($project->image) }}" alt="Project image"></td>
+                <td>{{ date('d/m/Y H:i', strtotime($project->published)) }}</td>
                 <td>
                     {{-- questa rotta visualizza il dettaglio del progetto --}}
                     <a class="btn btn-primary btn-square" href="{{ route('admin.projects.show', $project->id) }}"

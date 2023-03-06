@@ -28,9 +28,9 @@
 
                 <strong class="mt-3">Immagine</strong>
                 <div>{{ $project->image }}</div>
-                {{-- <div>
+                <div>
                     <img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image">
-                </div> --}}
+                </div>
 
                 <strong>Pubblicato</strong>
                 <p>{{ date('d/m/Y H:i:s', strtotime($project->published)) }}</p>

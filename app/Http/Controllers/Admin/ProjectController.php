@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Project;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use Illuminate\Http\Request;
+use App\Models\Project;
 use DateTime;
 
 class ProjectController extends Controller
@@ -51,6 +51,7 @@ class ProjectController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|max:40',
             'description' => 'nullable',
+            'slug' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
             'url' => 'nullable|url',
@@ -119,10 +120,11 @@ class ProjectController extends Controller
      * TODO: Aggiorna la risorsa specificata nell'archiviazione
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  Project  $project
+     * @param  App\Http\Request\UpdateProjectRequest  $request
      * @return \Illuminate\Http\Response
+     *
      */
-    public function update(Request $request, Project $project, $id)
+    public function update(UpdateProjectRequest $request, $id)
     {
         $project = Project::findOrFail($id);
 

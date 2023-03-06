@@ -17,12 +17,13 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
 
-            $table->string('title');
-            $table->text('description');
+            $table->string('title', 150)->unique();
+            $table->text('description')->nullable();
+            $table->string('slug');
             $table->string('category');
             $table->string('image')->nullable();
             $table->string('url')->nullable();
-            $table->boolean('published')->default(false);
+            $table->dateTime('published')->nullable();
 
             $table->timestamps();
         });
