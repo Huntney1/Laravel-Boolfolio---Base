@@ -70,16 +70,6 @@ class ProjectController extends Controller
             unset($form_data['published']);
         }
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $data['image'] = file_get_contents($image->getRealPath());
-        }
-
-        if (isset($form_data['url']) && $form_data['url'] == 'https://picsum.photos/200/300') {
-            $form_data['url'] = $form_data['image'];
-        }
-
-
         $newProject = new Project;
         $newProject->title = $form_data['title'];
         $newProject->description = $form_data['description'];
@@ -105,7 +95,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        /* $project = Project::findOrFail($project); */
+        /* $project = Project::findOrFail($id); */
         return view('admin.projects.show', compact('project'));
     }
 
@@ -138,7 +128,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        /* $project = Project::findOrFail($id); */
+        /* $project = Project::findOrFail($project); */
 
         $form_data = $request->validated();
         $slug = Project::generateSlug($request->title);
@@ -164,8 +154,6 @@ class ProjectController extends Controller
             unset($form_data['published']);
         }
 
-
-        /* Project::create($validatedData); */
 
         $project->update($form_data);
         return redirect()->route('admin.projects.index')->with('message', ' Project successfully modified');
