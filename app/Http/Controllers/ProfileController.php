@@ -11,6 +11,8 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+     //! EDIT
+
     /**
      * Display the user's profile form.
      */
@@ -20,6 +22,8 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+
+    //! UPDATE
 
     /**
      * Update the user's profile information.
@@ -36,6 +40,8 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+
+    //! DESTROY
 
     /**
      * Delete the user's account.
