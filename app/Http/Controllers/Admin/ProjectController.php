@@ -15,7 +15,7 @@ class ProjectController extends Controller
 
     /**
      * Display a listing of the resource.
-     * TODO: Mostra l'elenco dei progetti
+     ** Mostra l'elenco dei progetti
      *
      * @return \Illuminate\Http\Response
      */
@@ -69,11 +69,7 @@ class ProjectController extends Controller
             unset($form_data['published']);
         }
 
-<<<<<<< HEAD
-        /* $newProject = new Project;
-=======
         /*  $newProject = new Project;
->>>>>>> 0735b34f3be33f67a8199ddf631191257b1cf2b9
         $newProject->title = $form_data['title'];
         $newProject->description = $form_data['description'];
         $newProject->category = $form_data['category'];
@@ -93,7 +89,7 @@ class ProjectController extends Controller
 
     /**
      * Display the specified resource.
-     * TODO: Visualizza la risorsa specificata
+     ** Visualizza la risorsa specificata
      *
      * @param  int  Project  $projectt
      * @return \Illuminate\Http\Response
@@ -108,7 +104,7 @@ class ProjectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * TODO: Vsualizza il modulo per la modifica della risorsa specificata
+     ** Vsualizza il modulo per la modifica della risorsa specificata
      *
      *
      * @param  int Project  $project
@@ -124,7 +120,7 @@ class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * TODO: Aggiorna la risorsa specificata nell'archiviazione
+     ** Aggiorna la risorsa specificata nell'archiviazione
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  App\Http\Request\UpdateProjectRequest  $request

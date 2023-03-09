@@ -1,12 +1,19 @@
 @extends('layouts.admin')
 @section('content')
+
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-between my-2">
                 <div>
                     <h1>Modifica {{ $project->title }}</h1>
-
                 </div>
+
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
                 <div>
                     <a href="{{ route('admin.projects.index') }}" class="btn btn-primary my-2">Torna all'Elenco</a>
                 </div>
