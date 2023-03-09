@@ -24,7 +24,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>['required', 'unique:projects,title', 'max:40'], // campo obbligatorio con una lunghezza massima di 255 caratteri
+            'title' => ['required', 'unique:projects,title', 'max:40'], // campo obbligatorio con una lunghezza massima di 255 caratteri
             'description' => ['nullable'], //* campo facoltativo di tipo stringa
             'category' => ['nullable'], // campo facoltativo di tipo stringa
             'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', 'dimensions:min_width=100,min_height=100,max_width=5000,max_height=5000'], //*  campo facoltativo di tipo immagine con i formati consentiti JPEG, PNG, JPG, GIF e SVG e dimensione massima di 2 MB
@@ -32,11 +32,14 @@ class StoreProjectRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
-
         return [
-
             'title.required' => 'Il titolo del progetto è obbligatorio',
             'title.unique' => 'Il titolo del progetto è già stato utilizzato',
             'title.max' => 'Il titolo del progetto non può superare i :max caratteri',
