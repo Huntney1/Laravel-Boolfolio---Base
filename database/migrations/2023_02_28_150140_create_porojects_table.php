@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('title', 40)->unique();
-            $table->text('description');
+            $table->paragraph('description');
             $table->string('slug');
-            $table->string('category');
+            $table->string('category')->nullable();
             $table->binary('image')->nullable();
             $table->dateTime('published')->nullable();
 
@@ -35,6 +35,9 @@ return new class extends Migration
      */
     public function down()
     {
+       /*  schema::table('project', function(Blueprint $table){
+            $table->dropColumn('image');
+        }); */
         Schema::dropIfExists('porojects');
     }
 };

@@ -20,7 +20,7 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i = 0; $i <= 10; $i++) {
+        for($i = 0; $i <= 10; $i++) {
 
             $newProject = new Project();
             $newProject->title = $faker->sentence(3);
@@ -28,7 +28,6 @@ class ProjectSeeder extends Seeder
             $newProject->slug = Str::slug($newProject->title, '-');
             $newProject->category = $faker->word();
             $newProject->image = $faker->imageUrl();
-            $newProject->url = $faker->url();
             $newProject->published = $faker->dateTimeThisYear()->format('Y-m-d H:i:s');
 
             $newProject->save();

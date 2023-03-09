@@ -21,11 +21,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        /**
-         ** Utilizzo del metodo paginate e del metodo with per caricare i dati correlati
-         ** e ottenere un numero limitato dei record alla volta
-         *! $projects = Project::with('category')->paginate(10);
-         */
+
+         //* Utilizzo del metodo paginate e del metodo with per caricare i dati correlati
+         //* e ottenere un numero limitato dei record alla volta
+         //! $projects = Project::with('category')->paginate(10);
+
         $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
     }
@@ -60,23 +60,24 @@ class ProjectController extends Controller
         $form_data['slug'] = $slug;
 
         $newProject = new Project;
-        $newProject->fill($form_data);
         /* $project->published = $form_data['published'] ?? true; //! Impostare il campo pubblico su true se non è presente */
 
         //* Converti la data nel formato desiderato
         if (!empty($form_data['published'])) {
             $date = new DateTime($form_data['published']);
-            $form_data['published_at'] = $date->format('d-m-Y');
+            $form_data['published'] = $date->format('d-m-Y');
             unset($form_data['published']);
         }
 
-        $newProject = new Project;
+        /*  $newProject = new Project;
         $newProject->title = $form_data['title'];
         $newProject->description = $form_data['description'];
         $newProject->category = $form_data['category'];
         $newProject->image = $form_data['image'];
         $newProject->published = $form_data['published'] ?? true; //! Impostare il campo pubblico su true se non è presente
+        */
 
+        $newProject->fill($form_data);
         $newProject->save();
 
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
@@ -137,13 +138,13 @@ class ProjectController extends Controller
        $project->update($form_data);
         return redirect()->route('admin.projects.index')->with('message','post modificato correttamente');
 
-        $form_data = $request->validate([
+        /* $form_data = $request->validate([
             'title' => 'required|max:40',
             'description' => 'nullable',
             'category' => 'required',
             'image' => 'required|url',
             'published' => 'nullable|date_format:Y-m-d H:i:s',
-        ]);
+        ]); */
 
         $form_data['published_at'] = $form_data['published'] ?? null;
 
