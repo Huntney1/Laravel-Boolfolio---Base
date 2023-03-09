@@ -69,7 +69,11 @@ class ProjectController extends Controller
             unset($form_data['published']);
         }
 
+<<<<<<< HEAD
         /* $newProject = new Project;
+=======
+        /*  $newProject = new Project;
+>>>>>>> 0735b34f3be33f67a8199ddf631191257b1cf2b9
         $newProject->title = $form_data['title'];
         $newProject->description = $form_data['description'];
         $newProject->category = $form_data['category'];
