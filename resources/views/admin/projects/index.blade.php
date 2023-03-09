@@ -36,7 +36,7 @@
                 <td>{{ $project->description }}</td>
                 <td>{{ $project->slug }}</td>
                 <td>{{ $project->category }}</td>
-                <td><img src="{{ asset('https://picsum.photos/200/300') }}" alt="Project image"></td>
+                <td><img src="{{ asset($project->image) }}" alt="Project image"></td>
                 <td>{{ date('d/m/Y H:i', strtotime($project->published)) }}</td>
 
                 <td>
